@@ -21,7 +21,9 @@
           <img
             src="https://placehold.co/74x24/EEE/31343C?font=playfair-display&text=Logo"
           />
-          <span class="q-ml-sm">E-Commerce</span>
+          <router-link to="/">
+            <span class="q-ml-sm"> E-Commerce </span></router-link
+          >
         </q-toolbar-title>
 
         <q-space />
