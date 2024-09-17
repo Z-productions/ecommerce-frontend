@@ -1,18 +1,7 @@
 <template>
   <q-layout view="lHh Lpr fff" class="bg-grey-1">
     <q-header class="bg-white text-grey-8" height-hint="64">
-      <q-toolbar class="GPL__toolbar q-mx-xl" style="height: 64px">
-        <q-btn
-          v-if="!$q.screen.gt.sm"
-          flat
-          dense
-          round
-          @click="toggleLeftDrawer"
-          aria-label="Menu"
-          icon="menu"
-          class="q-mx-md"
-        />
-
+      <q-toolbar class="GPL__toolbar" style="height: 64px">
         <q-toolbar-title
           v-if="$q.screen.gt.sm"
           shrink
@@ -48,103 +37,42 @@
 
         <q-space />
 
-        <div class="q-gutter-sm row items-center no-wrap">
-          <q-btn round flat>
-            <q-avatar size="26px">
-              <img src="https://cdn.quasar.dev/img/boy-avatar.png" />
-            </q-avatar>
-            <q-tooltip>Account</q-tooltip>
-          </q-btn>
-          <q-btn round dense flat color="grey-8" icon="notifications">
-            <q-badge color="red" text-color="white" floating> 2 </q-badge>
-            <q-tooltip>Notifications</q-tooltip>
-          </q-btn>
-        </div>
+        <q-btn round flat>
+          <q-avatar size="26px">
+            <img src="https://cdn.quasar.dev/img/boy-avatar.png" />
+          </q-avatar>
+          <q-tooltip>Account</q-tooltip>
+          <q-menu anchor="top end" self="bottom end">
+            <q-list class="text-grey-8" style="min-width: 100px">
+              <q-item aria-hidden="true">
+                <q-item-section
+                  class="text-uppercase text-grey-7"
+                  style="font-size: 0.7rem"
+                  >Menu</q-item-section
+                >
+              </q-item>
+              <q-item
+                v-for="menu in links3"
+                :key="menu.text"
+                clickable
+                v-close-popup
+                aria-hidden="true"
+                :to="menu?.redirect ? menu.path : { name: 'Login' }"
+              >
+                <q-item-section avatar>
+                  <q-icon :name="menu.icon" />
+                </q-item-section>
+                <q-item-section>{{ menu.text }}</q-item-section>
+              </q-item>
+            </q-list>
+          </q-menu>
+        </q-btn>
       </q-toolbar>
-      <q-toolbar inset class="q-mx-xl">
+      <q-toolbar inset class="GPL__toolbar">
         <q-toolbar-title><strong>Quasar</strong> Framework</q-toolbar-title>
       </q-toolbar>
     </q-header>
 
-    <q-drawer
-      v-model="leftDrawerOpen"
-      bordered
-      behavior="mobile"
-      @click="leftDrawerOpen = false"
-    >
-      <q-scroll-area class="fit">
-        <q-toolbar class="GPL__toolbar">
-          <q-toolbar-title class="row items-center text-grey-8">
-            <img
-              class="q-pl-md"
-              src="https://www.gstatic.com/images/branding/googlelogo/svg/googlelogo_clr_74x24px.svg"
-            />
-            <span class="q-ml-sm">Photos</span>
-          </q-toolbar-title>
-        </q-toolbar>
-
-        <q-list padding>
-          <q-item
-            v-for="link in links1"
-            :key="link.text"
-            clickable
-            class="GPL__drawer-item"
-          >
-            <q-item-section avatar>
-              <q-icon :name="link.icon" />
-            </q-item-section>
-            <q-item-section>
-              <q-item-label>{{ link.text }}</q-item-label>
-            </q-item-section>
-          </q-item>
-
-          <q-separator class="q-my-md" />
-
-          <q-item
-            v-for="link in links2"
-            :key="link.text"
-            clickable
-            class="GPL__drawer-item"
-          >
-            <q-item-section avatar>
-              <q-icon :name="link.icon" />
-            </q-item-section>
-            <q-item-section>
-              <q-item-label>{{ link.text }}</q-item-label>
-            </q-item-section>
-          </q-item>
-
-          <q-separator class="q-my-md" />
-
-          <q-item
-            v-for="link in links3"
-            :key="link.text"
-            clickable
-            class="GPL__drawer-item"
-          >
-            <q-item-section avatar>
-              <q-icon :name="link.icon" />
-            </q-item-section>
-            <q-item-section>
-              <q-item-label>{{ link.text }}</q-item-label>
-            </q-item-section>
-          </q-item>
-
-          <q-separator class="q-my-md" />
-
-          <q-item clickable class="GPL__drawer-item GPL__drawer-item--storage">
-            <q-item-section avatar>
-              <q-icon name="cloud" />
-            </q-item-section>
-            <q-item-section top>
-              <q-item-label>Storage</q-item-label>
-              <q-linear-progress :value="storage" class="q-my-sm" />
-              <q-item-label caption>2.6 GB of 15 GB</q-item-label>
-            </q-item-section>
-          </q-item>
-        </q-list>
-      </q-scroll-area>
-    </q-drawer>
     <q-footer class="bg-white text-grey-8" height-hint="400">
       <q-toolbar>
         <q-toolbar-title>Footer</q-toolbar-title>
@@ -157,35 +85,23 @@
 </template>
 
 <script setup lang="ts">
+import { useUserStore } from 'src/stores/user-store';
 import { ref } from 'vue';
-
+const userStore = useUserStore();
 defineOptions({
   name: 'MainLayout',
 });
 
-const leftDrawerOpen = ref(false);
 const search = ref('');
-const storage = ref(0.26);
-
-function toggleLeftDrawer() {
-  leftDrawerOpen.value = !leftDrawerOpen.value;
-}
-
-const links1 = [
-  { icon: 'photo', text: 'Photos' },
-  { icon: 'photo_album', text: 'Albums' },
-  { icon: 'assistant', text: 'Assistant' },
-  { icon: 'people', text: 'Sharing' },
-  { icon: 'book', text: 'Photo books' },
-];
-const links2 = [
-  { icon: 'archive', text: 'Archive' },
-  { icon: 'delete', text: 'Trash' },
-];
 const links3 = [
-  { icon: 'settings', text: 'Settings' },
-  { icon: 'help', text: 'Help & Feedback' },
-  { icon: 'get_app', text: 'App Downloads' },
+  {
+    icon: 'settings',
+    text: 'Settings',
+    path: { name: 'ProfilePage' },
+    redirect: userStore.isLogged,
+  },
+  { icon: 'help', text: 'Help & Feedback', path: '' },
+  { icon: 'get_app', text: 'App Downloads', path: '' },
 ];
 </script>
 
@@ -194,6 +110,8 @@ const links3 = [
 
   &__toolbar
     height: 64px
+    padding-left: 150px
+    padding-right: 150px
 
   &__toolbar-input
     width: 30%
