@@ -2,7 +2,7 @@
   <q-page padding>
     <div class="column q-pa-lg">
       <div class="row">
-        <q-card square class="shadow-24" style="width: 300px; height: 485px">
+        <q-card square class="shadow-24" style="width: 300px; height: 500px">
           <q-card-section class="bg-deep-purple-7">
             <h4 class="text-h5 text-white q-my-md">Company &amp; Co</h4>
             <div
@@ -63,6 +63,7 @@
               color="purple-4"
               class="full-width text-white"
               label="Sign In"
+              @click="onSingIn"
             />
           </q-card-actions>
           <q-card-section class="text-center q-pa-sm">
@@ -75,8 +76,11 @@
 </template>
 
 <script setup lang="ts">
+import { useUserStore } from 'src/stores/user-store';
 import { ref } from 'vue';
-
+import { useRouter } from 'vue-router';
+const userStore = useUserStore();
+const router = useRouter();
 defineOptions({
   name: 'LoginPage',
 });
@@ -85,4 +89,9 @@ const formLogin = ref({
   email: '',
   password: '',
 });
+
+const onSingIn = () => {
+  userStore.Login();
+  router.push('/');
+};
 </script>
