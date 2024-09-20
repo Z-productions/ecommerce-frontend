@@ -2,12 +2,12 @@
   <q-page padding>
     <div class="column q-pa-lg">
       <div class="row">
-        <q-card square class="shadow-24" style="width: 300px; height: 500px">
+        <q-card square class="shadow-24" style="width: 400px; height: 500px">
           <q-card-section class="bg-deep-purple-7">
             <h4 class="text-h5 text-white q-my-md">Company &amp; Co</h4>
             <div
               class="absolute-bottom-right q-pr-md"
-              style="transform: translateY(50%)"
+              style="z-index: 4; transform: translateY(50%)"
             >
               <q-btn
                 :to="{ name: 'Register' }"
@@ -24,7 +24,7 @@
                 clearable
                 v-model="formLogin.email"
                 type="email"
-                label="Email"
+                label="Email or Username"
               >
                 <template v-slot:prepend>
                   <q-icon name="email" />
@@ -67,7 +67,7 @@
             />
           </q-card-actions>
           <q-card-section class="text-center q-pa-sm">
-            <p class="text-grey-6">Forgot your password?</p>
+            <!-- <p class="text-grey-6">Forgot your password?</p> -->
           </q-card-section>
         </q-card>
       </div>

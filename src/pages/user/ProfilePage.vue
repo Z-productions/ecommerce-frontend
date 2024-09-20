@@ -49,12 +49,25 @@
       </q-drawer>
       <q-page-container>
         <q-page padding>
-          <p v-for="n in 15" :key="n">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit nihil
-            praesentium molestias a adipisci, dolore vitae odit, quidem
-            consequatur optio voluptates asperiores pariatur eos numquam rerum
-            delectus commodi perferendis voluptate?
-          </p>
+          <div class="row justify-center items-center full-width">
+            <q-item v-ripple>
+              <q-item-section side>
+                <q-avatar rounded size="48px">
+                  <img src="https://cdn.quasar.dev/img/avatar.png" />
+                </q-avatar>
+              </q-item-section>
+              <q-item-section>
+                <q-item-label>Mary</q-item-label>
+                <q-item-label caption>2 new messages</q-item-label>
+              </q-item-section>
+            </q-item>
+          </div>
+          <div class="row">
+            <div class="col"></div>
+          </div>
+          <div class="row">
+            <div class="col"></div>
+          </div>
         </q-page>
       </q-page-container>
     </q-layout>
